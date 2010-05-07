@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  thread_id: 1
+  order: 1
+  voter_id: 1
+  target_id: 1
+
+two:
+  thread_id: 1
+  order: 1
+  voter_id: 1
+  target_id: 1

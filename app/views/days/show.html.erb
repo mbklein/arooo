@@ -1,0 +1,13 @@
+<p>
+  <b>Game:</b>
+  <%=h @day.game_id %>
+</p>
+
+<p>
+  <b>Thread:</b>
+  <%=h @day.thread_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_day_path(@day) %> |
+<%= link_to 'Back', days_path %>

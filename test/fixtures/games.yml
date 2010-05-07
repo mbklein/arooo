@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  moderator_id: 1
+
+two:
+  title: MyString
+  moderator_id: 1

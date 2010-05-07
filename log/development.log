@@ -1,0 +1,800 @@
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (1.2ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "title" varchar(255), "moderator_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "game_id" integer, "sequence" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE TABLE "threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "thread_id" integer, "day_id" integer, "server_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+Migrating to CreateDays (20100507222823)
+Migrating to CreateThreads (20100507222931)
+Migrating to CreatePeople (20100507223013)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "vote_id" integer, "day_id" integer, "order" integer, "voter_id" integer, "target_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "order" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("days")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("games")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("nicknames")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("people")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("players")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("threads")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("votes")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "game_id" integer, "sequence" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "thread_id" integer, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "vote_id" integer, "day_id" integer, "order" integer, "voter_id" integer, "target_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "order" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "server_id" integer, "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("days")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("games")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("nicknames")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("people")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("players")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("servers")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateServers (20100507225437)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "servers"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507225437'[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "game_id" integer, "sequence" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "thread_id" integer, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "vote_id" integer, "day_id" integer, "order" integer, "voter_id" integer, "target_id" integer, "source_post" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "order" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "server_id" integer, "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("days")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("games")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("nicknames")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("people")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("players")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("servers")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mServer Load (0.3ms)[0m   [0;1mSELECT * FROM "servers" [0m
+  [4;35;1mSQL (0.6ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateServers (20100507225437)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "servers"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507225437'[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "game_id" integer, "sequence" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "thread_id" integer, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "vote_id" integer, "day_id" integer, "order" integer, "voter_id" integer, "target_id" integer, "source_post" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "order" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "server_id" integer, "name" varchar(255), "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("days")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("games")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("nicknames")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("people")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("players")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("servers")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mServer Create (0.3ms)[0m   [0mINSERT INTO "servers" ("name", "created_at", "server_id", "updated_at", "username", "base_url", "password") VALUES('Main Square', '2010-05-07 23:02:58', NULL, '2010-05-07 23:02:58', 'mbklein', 'http://www.mainsquare.org/', 'ho-cake')[0m
+  [4;36;1mServer Load (0.4ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateServers (20100507225437)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "servers"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507225437'[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "sequence" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.5ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "order" integer, "voter_id" integer, "target_id" integer, "source_post" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "order" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.5ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("days")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("games")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("nicknames")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("people")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("players")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("servers")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mServer Create (0.5ms)[0m   [0;1mINSERT INTO "servers" ("name", "created_at", "updated_at", "username", "base_url", "password") VALUES('Main Square', '2010-05-07 23:06:41', '2010-05-07 23:06:41', 'mbklein', 'http://www.mainsquare.org/', 'ho-cake')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mPerson Create (0.3ms)[0m   [0mINSERT INTO "people" ("name", "created_at", "updated_at") VALUES('mbklein', '2010-05-07 23:07:25', '2010-05-07 23:07:25')[0m
+  [4;36;1mPerson Load (0.3ms)[0m   [0;1mSELECT * FROM "people" WHERE ("people"."id" = 1) [0m
+  [4;35;1mGame Create (0.3ms)[0m   [0mINSERT INTO "games" ("created_at", "title", "moderator_id", "server_id", "updated_at") VALUES('2010-05-07 23:08:15', 'PJWW', NULL, NULL, '2010-05-07 23:08:15')[0m
+  [4;36;1mPerson Update (0.1ms)[0m   [0;1mUPDATE "people" SET "updated_at" = '2010-05-07 23:08:15' WHERE "id" = 1[0m
+  [4;35;1mServer Update (0.1ms)[0m   [0mUPDATE "servers" SET "updated_at" = '2010-05-07 23:08:15' WHERE "id" = 1[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mDay Load (0.0ms)[0m   [0mSQLite3::SQLException: near "order": syntax error: SELECT * FROM "days" WHERE ("days".game_id = 1) ORDER BY order[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateServers (20100507225437)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "servers"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507225437'[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.6ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "seq" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.5ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "seq" integer, "voter_id" integer, "target_id" integer, "source_post" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "seq" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("days")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("games")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("nicknames")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("people")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("players")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("servers")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mServer Create (0.3ms)[0m   [0;1mINSERT INTO "servers" ("name", "created_at", "updated_at", "username", "base_url", "password") VALUES('Main Square', '2010-05-07 23:12:12', '2010-05-07 23:12:12', 'mbklein', 'http://www.mainsquare.org/', 'ho-cake')[0m
+  [4;35;1mPerson Create (0.2ms)[0m   [0mINSERT INTO "people" ("name", "created_at", "updated_at") VALUES('mbklein', '2010-05-07 23:12:12', '2010-05-07 23:12:12')[0m
+  [4;36;1mGame Create (0.3ms)[0m   [0;1mINSERT INTO "games" ("created_at", "title", "moderator_id", "server_id", "updated_at") VALUES('2010-05-07 23:12:12', 'PJWW', NULL, NULL, '2010-05-07 23:12:12')[0m
+  [4;35;1mPerson Update (0.1ms)[0m   [0mUPDATE "people" SET "updated_at" = '2010-05-07 23:12:12' WHERE "id" = 1[0m
+  [4;36;1mServer Update (0.1ms)[0m   [0;1mUPDATE "servers" SET "updated_at" = '2010-05-07 23:12:12' WHERE "id" = 1[0m
+  [4;35;1mDay Load (0.2ms)[0m   [0mSELECT * FROM "days" WHERE ("days".game_id = 1) ORDER BY seq[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mDay Create (0.4ms)[0m   [0mINSERT INTO "days" ("created_at", "updated_at", "thread_id", "game_id", "seq") VALUES('2010-05-07 23:12:59', '2010-05-07 23:12:59', NULL, 1, NULL)[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateServers (20100507225437)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "servers"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507225437'[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "seq" integer, "thread_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "day_threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "seq" integer, "voter_id" integer, "target_id" integer, "source_post" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "seq" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("day_threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("days")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("games")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("nicknames")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("people")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("players")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("servers")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mServer Create (0.3ms)[0m   [0;1mINSERT INTO "servers" ("name", "created_at", "updated_at", "username", "base_url", "password") VALUES('Main Square', '2010-05-07 23:15:50', '2010-05-07 23:15:50', 'mbklein', 'http://www.mainsquare.org/', 'ho-cake')[0m
+  [4;35;1mPerson Create (0.2ms)[0m   [0mINSERT INTO "people" ("name", "created_at", "updated_at") VALUES('mbklein', '2010-05-07 23:15:50', '2010-05-07 23:15:50')[0m
+  [4;36;1mGame Create (0.3ms)[0m   [0;1mINSERT INTO "games" ("created_at", "title", "moderator_id", "server_id", "updated_at") VALUES('2010-05-07 23:15:50', 'PJWW', NULL, NULL, '2010-05-07 23:15:50')[0m
+  [4;35;1mPerson Update (0.1ms)[0m   [0mUPDATE "people" SET "updated_at" = '2010-05-07 23:15:50' WHERE "id" = 1[0m
+  [4;36;1mServer Update (0.1ms)[0m   [0;1mUPDATE "servers" SET "updated_at" = '2010-05-07 23:15:50' WHERE "id" = 1[0m
+  [4;35;1mDay Create (0.2ms)[0m   [0mINSERT INTO "days" ("created_at", "updated_at", "thread_id", "game_id", "seq") VALUES('2010-05-07 23:15:50', '2010-05-07 23:15:50', NULL, 1, NULL)[0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mPerson Load (0.2ms)[0m   [0mSELECT * FROM "people" WHERE ("people"."id" = 1) [0m
+  [4;36;1mGame Load (0.2ms)[0m   [0;1mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mPerson Load (0.2ms)[0m   [0mSELECT * FROM "people" WHERE ("people"."id" = 1) [0m
+  [4;36;1mGame Load (0.2ms)[0m   [0;1mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;35;1mDay Load (0.3ms)[0m   [0mSELECT * FROM "days" WHERE ("days".game_id = 1) ORDER BY seq LIMIT 1[0m
+  [4;36;1mDayThread Load (0.2ms)[0m   [0;1mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;35;1mDayThread Create (0.7ms)[0m   [0mINSERT INTO "day_threads" ("created_at", "last_post", "updated_at", "last_page", "topic_id", "day_id") VALUES('2010-05-07 23:18:10', NULL, '2010-05-07 23:18:10', NULL, 10001, NULL)[0m
+  [4;36;1mDayThread Load (0.1ms)[0m   [0;1mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;35;1mDayThread Update (0.2ms)[0m   [0mUPDATE "day_threads" SET "updated_at" = '2010-05-07 23:18:10', "day_id" = 1 WHERE "id" = 1[0m
+  [4;36;1mDay Load (0.4ms)[0m   [0;1mSELECT * FROM "days" WHERE ("days"."id" = 1) [0m
+  [4;35;1mGame Load (0.2ms)[0m   [0mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;36;1mServer Load (0.0ms)[0m   [0;1mSQLite3::SQLException: no such column: servers.game_id: SELECT * FROM "servers" WHERE ("servers".game_id = 1) LIMIT 1[0m
+  [4;35;1mServer Load (0.0ms)[0m   [0mSQLite3::SQLException: no such column: servers.game_id: SELECT * FROM "servers" WHERE ("servers".game_id = 1) LIMIT 1[0m
+  [4;36;1mPerson Load (0.0ms)[0m   [0;1mSQLite3::SQLException: no such column: people.game_id: SELECT * FROM "people" WHERE ("people".game_id = 1) LIMIT 1[0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mGame Load (0.3ms)[0m   [0mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mGame Load (0.2ms)[0m   [0mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;36;1mPerson Load (0.2ms)[0m   [0;1mSELECT * FROM "people" WHERE ("people"."id" = 1) [0m
+  [4;35;1mGame Update (0.5ms)[0m   [0mUPDATE "games" SET "updated_at" = '2010-05-07 23:23:50', "moderator_id" = 1, "server_id" = 1 WHERE "id" = 1[0m
+  [4;36;1mPlayer Load (0.2ms)[0m   [0;1mSELECT * FROM "players" WHERE ("players".game_id = 1) ORDER BY seq[0m
+  [4;35;1mDay Load (0.3ms)[0m   [0mSELECT * FROM "days" WHERE ("days".game_id = 1) ORDER BY seq[0m
+  [4;36;1mDayThread Load (0.3ms)[0m   [0;1mSELECT * FROM "day_threads" WHERE ("day_threads"."id" = 1) [0m
+  [4;35;1mDayThread Load (0.2ms)[0m   [0mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateServers (20100507225437)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "servers"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507225437'[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "players"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223839'[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.3ms)[0m   [0mDROP TABLE "votes"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223151'[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.6ms)[0m   [0mDROP TABLE "nicknames"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223027'[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "people"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507223013'[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "day_threads"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222931'[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.4ms)[0m   [0mDROP TABLE "days"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222823'[0m
+Migrating to CreateGames (20100507222714)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "games"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20100507222714'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateGames (20100507222714)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "moderator_id" integer, "server_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222714')[0m
+Migrating to CreateDays (20100507222823)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "days" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "seq" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222823')[0m
+Migrating to CreateThreads (20100507222931)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "day_threads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "topic_id" integer, "last_page" integer, "last_post" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507222931')[0m
+Migrating to CreatePeople (20100507223013)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223013')[0m
+Migrating to CreateNicknames (20100507223027)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "nicknames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "nickname" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223027')[0m
+Migrating to CreateVotes (20100507223151)
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "day_id" integer, "seq" integer, "voter_id" integer, "target_id" integer, "source_post" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223151')[0m
+Migrating to CreatePlayers (20100507223839)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "person_id" integer, "game_id" integer, "seq" integer, "role" varchar(255), "alignment" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507223839')[0m
+Migrating to CreateServers (20100507225437)
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "servers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "base_url" varchar(255), "username" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507225437')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("day_threads")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("days")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("games")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("nicknames")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("people")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("players")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("servers")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("votes")[0m
+  [4;36;1mServer Create (0.3ms)[0m   [0;1mINSERT INTO "servers" ("name", "created_at", "updated_at", "username", "base_url", "password") VALUES('Main Square', '2010-05-07 23:25:28', '2010-05-07 23:25:28', 'mbklein', 'http://www.mainsquare.org/', 'ho-cake')[0m
+  [4;35;1mPerson Create (0.2ms)[0m   [0mINSERT INTO "people" ("name", "created_at", "updated_at") VALUES('mbklein', '2010-05-07 23:25:28', '2010-05-07 23:25:28')[0m
+  [4;36;1mGame Create (0.2ms)[0m   [0;1mINSERT INTO "games" ("created_at", "title", "moderator_id", "server_id", "updated_at") VALUES('2010-05-07 23:25:28', 'PJWW', 1, 1, '2010-05-07 23:25:28')[0m
+  [4;35;1mDay Create (0.2ms)[0m   [0mINSERT INTO "days" ("created_at", "updated_at", "game_id", "seq") VALUES('2010-05-07 23:25:28', '2010-05-07 23:25:28', 1, NULL)[0m
+  [4;36;1mDayThread Create (0.3ms)[0m   [0;1mINSERT INTO "day_threads" ("created_at", "last_post", "updated_at", "last_page", "topic_id", "day_id") VALUES('2010-05-07 23:25:35', NULL, '2010-05-07 23:25:35', NULL, 10001, NULL)[0m
+  [4;35;1mDayThread Load (0.1ms)[0m   [0mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;36;1mDayThread Update (0.2ms)[0m   [0;1mUPDATE "day_threads" SET "updated_at" = '2010-05-07 23:25:35', "day_id" = 1 WHERE "id" = 1[0m
+  [4;35;1mGame Load (0.3ms)[0m   [0mSELECT * FROM "games" WHERE ("games".moderator_id = 1) [0m
+  [4;36;1mDay Load (0.3ms)[0m   [0;1mSELECT * FROM "days" WHERE ("days"."id" = 1) [0m
+  [4;35;1mGame Load (0.2ms)[0m   [0mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mDayThread Load (0.3ms)[0m   [0mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mGame Load (0.2ms)[0m   [0mSELECT * FROM "games" WHERE ("games".server_id = 1) LIMIT 1[0m
+  [4;36;1mPerson Load (0.1ms)[0m   [0;1mSELECT * FROM "people" WHERE ("people"."id" = 1) [0m
+  [4;35;1mDay Load (0.2ms)[0m   [0mSELECT * FROM "days" WHERE ("days".game_id = 1) ORDER BY seq LIMIT 1[0m
+  [4;36;1mDayThread Load (0.2ms)[0m   [0;1mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;35;1mDay Load (0.3ms)[0m   [0mSELECT * FROM "days" WHERE ("days"."id" = 1) [0m
+  [4;36;1mGame Load (0.2ms)[0m   [0;1mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;35;1mServer Load (0.2ms)[0m   [0mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;36;1mDayThread Update (0.5ms)[0m   [0;1mUPDATE "day_threads" SET "updated_at" = '2010-05-07 23:31:42', "last_page" = 100 WHERE "id" = 1[0m
+  [4;36;1mServer Load (0.2ms)[0m   [0;1mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;35;1mGame Load (0.2ms)[0m   [0mSELECT * FROM "games" WHERE ("games".server_id = 1) LIMIT 1[0m
+  [4;36;1mPerson Load (0.1ms)[0m   [0;1mSELECT * FROM "people" WHERE ("people"."id" = 1) [0m
+  [4;35;1mDay Load (0.2ms)[0m   [0mSELECT * FROM "days" WHERE ("days".game_id = 1) ORDER BY seq LIMIT 1[0m
+  [4;36;1mDayThread Load (0.2ms)[0m   [0;1mSELECT * FROM "day_threads" WHERE ("day_threads".day_id = 1) LIMIT 1[0m
+  [4;35;1mDay Load (0.2ms)[0m   [0mSELECT * FROM "days" WHERE ("days"."id" = 1) [0m
+  [4;36;1mGame Load (0.2ms)[0m   [0;1mSELECT * FROM "games" WHERE ("games"."id" = 1) [0m
+  [4;35;1mServer Load (0.2ms)[0m   [0mSELECT * FROM "servers" WHERE ("servers"."id" = 1) [0m
+  [4;36;1mDayThread Update (0.3ms)[0m   [0;1mUPDATE "day_threads" SET "updated_at" = '2010-05-07 23:32:51', "last_page" = 1 WHERE "id" = 1[0m
