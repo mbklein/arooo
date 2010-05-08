@@ -61,8 +61,6 @@ ActiveRecord::Schema.define(:version => 20100507225437) do
   create_table "servers", :force => true do |t|
     t.string   "name"
     t.string   "base_url"
-    t.string   "username"
-    t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

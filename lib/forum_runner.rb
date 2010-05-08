@@ -10,19 +10,21 @@ class ForumRunner
     :get_thread => [ :threadid, [:page,1], [:per_page,15] ]
   }
   
+  attr_accessor :session_key
+  
   def initialize(url)
-    @cookie = {}
+    @session_key = {}
     @uri = URI.parse(url).merge("forumrunner/request.php")
   end
 
   def do_request(params)
     req = Net::HTTP::Post.new(@uri.path)
     req.set_form_data(params)
-    req['cookie'] = @cookie.collect { |*c| c.join('=') }.join('; ')
+    req['cookie'] = @session_key.collect { |*c| c.join('=') }.join('; ')
     res = Net::HTTP.new(@uri.host, @uri.port).start { |http| http.request(req) }
     unless res['set-cookie'].nil?
       res_cookies = res.each_header { }['set-cookie'].collect { |v| v.split(/\s*;\s*/).first }.inject({}) { |h,c| k,v = c.split(/=/,2); h[k] = v; h } #/
-      @cookie.merge!(res_cookies) 
+      @session_key.merge!(res_cookies) 
     end
     return JSON.parse(res.body)
   end
