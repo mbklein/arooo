@@ -3,8 +3,8 @@ class CreateDays < ActiveRecord::Migration
     create_table :days do |t|
       t.integer :game_id
       t.integer :seq
-
-      t.timestamps
+      t.datetime :started
+      t.datetime :ended
     end
   end
 

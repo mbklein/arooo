@@ -12,57 +12,47 @@
 ActiveRecord::Schema.define(:version => 20100507225437) do
 
   create_table "day_threads", :force => true do |t|
-    t.integer  "day_id"
-    t.integer  "topic_id"
-    t.integer  "last_page"
-    t.integer  "last_post"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "day_id"
+    t.integer "topic_id"
+    t.integer "last_page"
+    t.integer "last_post"
   end
 
   create_table "days", :force => true do |t|
     t.integer  "game_id"
     t.integer  "seq"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "started"
+    t.datetime "ended"
   end
 
   create_table "games", :force => true do |t|
-    t.string   "title"
-    t.integer  "moderator_id"
-    t.integer  "server_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "title"
+    t.integer "moderator_id"
+    t.integer "server_id"
   end
 
   create_table "nicknames", :force => true do |t|
-    t.integer  "person_id"
-    t.string   "nickname"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "person_id"
+    t.string  "nickname"
   end
 
   create_table "people", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
   end
 
   create_table "players", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "game_id"
-    t.integer  "seq"
-    t.string   "role"
-    t.string   "alignment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "person_id"
+    t.integer "game_id"
+    t.integer "seq"
+    t.string  "role"
+    t.string  "alignment"
   end
 
   create_table "servers", :force => true do |t|
-    t.string   "name"
-    t.string   "base_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
+    t.string "base_url"
+    t.string "username"
+    t.string "password"
   end
 
   create_table "votes", :force => true do |t|
@@ -70,9 +60,9 @@ ActiveRecord::Schema.define(:version => 20100507225437) do
     t.integer  "seq"
     t.integer  "voter_id"
     t.integer  "target_id"
+    t.string   "target_name"
+    t.datetime "cast"
     t.string   "source_post"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
 end

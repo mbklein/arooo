@@ -2,8 +2,8 @@ class Server < ActiveRecord::Base
 
 has_many :games
 
-def login(username, password)
-  self.runner.login(username, password)
+def login
+  self.runner.login(self.username, self.password)
 end
 
 def session_key
@@ -19,6 +19,8 @@ def runner
     @runner = ForumRunner.new(self.base_url)
     if self.session_key
       @runner.session_key = self.session_key
+    elsif self.username and self.password
+      @runner.login(self.username, self.password)    
     end
   end
   @runner

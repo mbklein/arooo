@@ -5,8 +5,6 @@ class CreateThreads < ActiveRecord::Migration
       t.integer :topic_id
       t.integer :last_page
       t.integer :last_post
-
-      t.timestamps
     end
   end
 

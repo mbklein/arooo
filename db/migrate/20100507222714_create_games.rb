@@ -4,8 +4,6 @@ class CreateGames < ActiveRecord::Migration
       t.string :title
       t.integer :moderator_id
       t.integer :server_id
-
-      t.timestamps
     end
   end
 

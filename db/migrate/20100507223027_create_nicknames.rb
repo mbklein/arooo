@@ -3,8 +3,6 @@ class CreateNicknames < ActiveRecord::Migration
     create_table :nicknames do |t|
       t.integer :person_id
       t.string :nickname
-
-      t.timestamps
     end
   end
 

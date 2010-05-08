@@ -5,9 +5,9 @@ class CreateVotes < ActiveRecord::Migration
       t.integer :seq
       t.integer :voter_id
       t.integer :target_id
+      t.string  :target_name
+      t.datetime :cast
       t.string :source_post
-
-      t.timestamps
     end
   end
 

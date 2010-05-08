@@ -3,8 +3,8 @@ class CreateServers < ActiveRecord::Migration
     create_table :servers do |t|
       t.string :name
       t.string :base_url
-
-      t.timestamps
+      t.string :username
+      t.string :password
     end
   end
 

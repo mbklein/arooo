@@ -6,8 +6,6 @@ class CreatePlayers < ActiveRecord::Migration
       t.integer :seq
       t.string :role
       t.string :alignment
-
-      t.timestamps
     end
   end
 
