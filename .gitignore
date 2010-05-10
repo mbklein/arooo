@@ -1,1 +1,4 @@
 vendor/plugins/identity-map
+*.sqlite3
+log
+tmp

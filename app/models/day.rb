@@ -16,6 +16,11 @@ class Day < ActiveRecord::Base
     (self.players.length / 2) + 1
   end
   
+  def kill(player, fate = nil)
+    self.deaths << player
+    player.update_attribute :fate, fate
+  end
+  
   def tally
     lynch = false
     players = self.players
@@ -23,28 +28,30 @@ class Day < ActiveRecord::Base
     unvoted = players.dup
     self.votes.each { |v|
       if v.action == 'vote'
-        target_line = record.find { |line| line[0] == v.target }
+        target_line = record.find { |line| line[:target] == v.target }
         if target_line.nil?
-          target_line = [v.target,[]]
+          target_line = { :target => v.target, :voters => [] }
           record << target_line
         end
         
-        target_line[1] << unvoted.delete(v.voter)
-        if target_line[1].length >= self.to_lynch
+        target_line[:voters] << unvoted.delete(v.voter)
+        if target_line[:voters].length >= self.to_lynch
           lynch = true
+          self.deaths << v.target
           break
         end
       else
-        target_line = record.find { |line| line[1].include?(v.voter) }
-        unvoted << target_line[1].delete(v.voter)
-        if target_line[1].compact.empty?
+        target_line = record.find { |line| line[:voters].include?(v.voter) }
+        unvoted << target_line[:voters].delete(v.voter)
+        target_line[:voters].compact!
+        if target_line[:voters].empty?
           record.delete(target_line)
         end
       end
     }
     
     record = record.compact.sort { |a,b|
-      vc = b[1].length <=> a[1].length
+      vc = b[:voters].length <=> a[:voters].length
     }
     
     return {

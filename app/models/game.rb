@@ -4,6 +4,10 @@ class Game < ActiveRecord::Base
   belongs_to :moderator, :class_name => 'Person'
   belongs_to :server
   
+  def new_day(topic_id = nil)
+    self.days << Day.create(:seq => self.days.length+1, :topic_id => topic_id)
+  end
+  
   def add_players(people, opts = {})
     opts = { :create => false }.merge(opts)
     people.each { |person|
@@ -20,9 +24,16 @@ class Game < ActiveRecord::Base
     }
   end
   
-  def find_player(str)
-    person = Person.identify(str)
-    player = self.players.select { |p| p.person == person }.first
+  def find_player(p)
+    if p.is_a?(Player)
+      person = p.person
+    elsif p.is_a?(Person)
+      person = p
+    else
+      person = Person.identify(p)
+    end
+
+    return self.players.select { |player| player.person == person }.first
   end
   
 end

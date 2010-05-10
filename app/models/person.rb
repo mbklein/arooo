@@ -35,4 +35,12 @@ class Person < ActiveRecord::Base
   def valid_names
     [self.name] + self.nicknames.collect { |nick| nick.nickname }
   end
+
+  def to_s
+    self.name
+  end
+  
+  def inspect
+    %{\#<#{self.class.name} "#{self.to_s}">}
+  end
 end

@@ -1,0 +1,17 @@
+<div id="tallydiv">
+  <p><b>Official Day <%= @tally[:seq] %> Vote Count</b><br></p>
+  <p><%= @tally[:player_count] %> players / <%= @tally[:to_lynch] %> votes needed to lynch.<br></p>
+  <% unless @tally[:record].empty? %>
+    <p>
+      <% @tally[:record].each { |vote_line| %>
+        <b><%= colorize(vote_line[:target]) %> (<%= vote_line[:voters].length %>):</b> <%= vote_line[:voters].collect { |voter| colorize(voter) }.join(', ') %><br/>
+      <% } %>
+    </p>
+  <% end %>
+  <% unless @tally[:unvoted].empty? %>
+    <p><b>Votes outstanding (<%= @tally[:unvoted].length %>):</b> <%= @tally[:unvoted].collect { |voter| colorize(voter) }.join(', ') %></p>
+  <% end %>
+  <% if @tally[:lynch] %>
+    <p><b>That's a lynch! Please submit your day moves.</b></p>
+  <% end %>
+</div>
