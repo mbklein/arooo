@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <ModulePrefs title="Werewolf Vote Tally Gadget" description="Tallies votes"
+        author="Michael B. Klein" author_affiliation="Michael B. Klein"
+        author_email="mbklein@gmail.com" screenshot="/ig/modules/spreadsheet.png"
+        thumbnail="/ig/modules/spreadsheet-thm.png">
+        <Require feature="idi"/>
+        <Require feature="locked-domain"/>
+    </ModulePrefs>
+    <UserPref name="_table_query_url" display_name="Data source url" required="true"/>
+    <UserPref name="_table_query_refresh_interval" display_name="Data refresh interval"
+        default_value="0" datatype="enum" required="false">
+        <EnumValue value="0" display_value="Do not refresh"/>
+        <EnumValue value="5" display_value="5 seconds"/>
+        <EnumValue value="10" display_value="10 seconds"/>
+        <EnumValue value="30" display_value="30 seconds"/>
+        <EnumValue value="60" display_value="1 minute"/>
+        <EnumValue value="300" display_value="5 minutes"/>
+        <EnumValue value="1800" display_value="30 minutes"/>
+    </UserPref>
+    <UserPref name="lynch_verb" display_name="&quot;...votes needed...&quot; verb"
+        default_value="to lynch" required="false"/>
+    <UserPref name="lynch_text" display_name="Lynch text"
+        default_value="That's a lynch! Please submit your night moves." required="true"/>
+    <Content type="html">
+<![CDATA[
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="http://werewolves.are.outoffoc.us/prototype.js"></script>
+<div id="mainContainer" style="padding: 6px">
+	<p style="margin: 0px;">
+		<a href="#" onclick="sendQuery(); return false();" style="font-size: 10px">Refresh Tally</a>
+		<a href="#" onclick="toggleBBCode(); return false();" style="font-size: 10px">Toggle BBCode</a>
+	</p>
+	<div id="tallydiv" style="width: 100%; overflow-x: hidden; overflow-y: auto; font-size: 12px; padding-top: 6px">
+		<img src="http://www.google.com/ig/images/spinner.gif" />
+	</div>
+	<div id="copydiv" style="display: none;">
+	</div>
+</div>
+<script type="text/javascript">
+console.debug('loading Prefs')
+var prefs = new _IG_Prefs();
+var gadgetHelper = null;
+console.debug('registering onLoad handler')
+_IG_RegisterOnloadHandler(loadVisualizationAPI);
+
+function loadVisualizationAPI() {
+    console.debug('entering loadVisualizationAPI')
+    google.load("visualization", "1");
+    google.setOnLoadCallback(sendQuery);
+    console.debug('leaving loadVisualizationAPI')
+}
+
+function sendQuery() {
+	  console.debug('entering sendQuery')
+    gadgetHelper = new google.visualization.GadgetHelper();
+    var query = gadgetHelper.createQueryFromPrefs(prefs);
+    query.send(handleQueryResponse);
+	  console.debug('leaving sendQuery')
+}
+
+function handleQueryResponse(response) {
+    /**
+		   * Use the visualization GadgetHelper class to handle errors 
+		   */
+		console.debug('entering handleQueryResponse')
+    if (!gadgetHelper.validateResponse(response)) {
+        return;
+        // Default error handling was done, just leave.
+    }
+    handleResponseData(response.getDataTable());
+		console.debug('leaving handleQueryResponse')
+}
+
+function handleResponseData(data) {
+	  console.debug('entering handleResponseData')
+    var day = data.getFormattedValue(0, 0);
+    //    var time = data.getFormattedValue(0,2);
+    var current_voters = new Hash();
+    var unassigned_voters = new Array();
+    var vote_list = new Hash();
+    var vote_order = new Array();
+
+    var tableDiv = _gel('tallydiv');
+    var copyDiv = _gel('copydiv');
+    var html = [];
+    var row_count = data.getNumberOfRows();
+    var player_count = -1;
+    var voter,
+    target;
+
+    for (var row = 1; row < row_count; row++) {
+        try {
+            voter = data.getFormattedValue(row, 0);
+        } catch(e) {
+            voter = ''
+        }
+
+        try {
+            target = data.getFormattedValue(row, 1);
+        } catch(e) {
+            target = ''
+        }
+
+        if (player_count == -1) {
+            if (target != '') {
+                player_count = row - 1;
+            } else {
+                unassigned_voters.push(voter);
+            }
+        }
+
+        if (player_count > 0) {
+            if (current_voters[voter]) {
+                var old_target = current_voters[voter];
+                if (vote_list[old_target]) {
+                    vote_list[old_target] = vote_list[old_target].without(voter);
+                    if (vote_list[old_target].length == 0) {
+                        vote_list[old_target] = null;
+                        vote_order = vote_order.without(old_target);
+                    }
+                }
+            }
+
+            if (target == '') {
+                unassigned_voters.push(voter);
+            } else {
+                if (vote_list[target] == null) {
+                    vote_list[target] = new Array();
+                    vote_order.push(target)
+                }
+                vote_list[target].push(voter);
+                current_voters[voter] = target;
+                unassigned_voters = unassigned_voters.without(voter);
+            }
+        }
+    }
+
+    unassigned_voters = unassigned_voters.without('', null);
+
+    if (player_count == -1) {
+        player_count = unassigned_voters.length;
+    }
+
+    var votes_to_lynch = (player_count / 2).floor() + 1
+    var lynch = false;
+
+    html.push('[b]Official ' + day + ' Vote Count[/b]\n');
+    html.push(player_count + ' players / ' + votes_to_lynch.toString() + ' votes needed ' + prefs.getString('lynch_verb') + '\n');
+
+    vote_order.sort(function(a, b) {
+        comp = vote_list[b].length - vote_list[a].length;
+        return (comp == 0 ? vote_order.indexOf(a) - vote_order.indexOf(b) : comp);
+    });
+
+    vote_order.each(function(target) {
+        var voters = vote_list[target];
+        html.push('[b]' + target + ' (' + voters.length + '):[/b] ' + voters.join(', '));
+        if (voters.length >= votes_to_lynch) {
+            lynch = true;
+        }
+    });
+
+    if (unassigned_voters.length > 0) {
+        html.push('\nVotes outstanding (' + unassigned_voters.length + '): ' + unassigned_voters.join(', '));
+    }
+
+    if (lynch) {
+        html.push("\n[b]" + prefs.getString("lynch_text") + "[/b]");
+    }
+
+    /**
+			 *Set the generated html into the container div.
+	     */
+    copyDiv.innerHTML = html.join('\n');
+    toggleBBCode(false);
+	  console.debug('leaving handleResponseData')
+}
+
+var bbcode = false;
+function toggleBBCode(force) {
+    if (force == null) {
+        bbcode = !bbcode;
+    } else {
+        bbcode = force
+    }
+    var html = _gel('copydiv').innerHTML.replace(/s*$/, '').replace(/\n/g, '<br />');
+    if (!bbcode) {
+        html = html.replace(/\[(\/?b)\]/g,
+        '<$1>');
+    }
+    var tallydiv = _gel('tallydiv');
+    tallydiv.innerHTML = html;
+    if (bbcode) {
+        var range = document.createRange();
+        range.selectNodeContents(tallydiv);
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(range);
+    }
+}
+</script>
+]]>
+    </Content>
+</Module>

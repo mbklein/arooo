@@ -3,7 +3,7 @@ require 'nokogiri'
 
 class Server < ActiveRecord::Base
 
-has_many :games
+has_many :games, :dependent => :destroy
 serialize :cookies
 
 def agent
@@ -52,6 +52,10 @@ def get_thread(thread_id, page = 1)
   end  
   self.get("showthread.php?t=#{thread_id}&page=#{page}")
   (this_page, last_page) = self.agent.page.body.scan(/Page ([0-9]+) of ([0-9]+)/).uniq.flatten.collect { |m| m.to_i }
+  if this_page.nil? and last_page.nil?
+    this_page = 1
+    last_page = 1
+  end
   if this_page < page
     raise RangeError, "Page #{page} out of range 1-#{last_page}"
   end

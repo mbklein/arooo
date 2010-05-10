@@ -8,7 +8,7 @@ class Vote < ActiveRecord::Base
   end
   
   def identified
-    identified = self.target_name && self.target_id ? true : false
+    identified = (action == 'unvote' || (self.target_name && self.target_id)) ? true : false
   end
   
   def resolve(target, global = true)

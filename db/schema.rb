@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100510062905) do
+ActiveRecord::Schema.define(:version => 20100510162014) do
 
   create_table "day_threads", :force => true do |t|
     t.integer "day_id"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(:version => 20100510062905) do
     t.integer "seq"
     t.string  "role"
     t.string  "alignment"
+    t.string  "fate"
+    t.integer "death_day_id"
   end
 
   create_table "servers", :force => true do |t|
