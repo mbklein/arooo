@@ -10,47 +10,29 @@ def server
   self.day.game.server
 end
 
-def runner
-  self.server.runner
-end
-
 def get_page(page = nil)
   if page.nil?
-    page = self.last_page
+    page = self.last_page || 1
   end
-  result = self.runner.get_thread(self.topic_id, page, 50)
-  if result['success']
-    return result['data']
-  else
-    raise ThreadLoadError, result['message']
-  end
+  result = self.server.get_thread(self.topic_id, page)
+  self.update_attribute(:last_page,page)
+  return result
 end
 
 def next_page
   self.get_page(self.last_page.to_i + 1)
 end
 
-def each_unread
-  data = self.get_page
-  if data['posts'].last['post_id'].to_i <= self.last_post.to_i
-    return false
-  end
-  
-  until data.nil?
-    self.last_page = data['page']
-    data['posts'].each { |post| 
-      if post['post_id'].to_i > self.last_post.to_i
-        yield(post)
-        self.last_post = post['post_id'].to_i
-      end
-    }
-    if (self.last_page.to_i * 50) >= data['total_posts']
-      data = nil
+def each_unread_page
+  page = self.get_page
+  until page.nil? do
+    yield(page)
+    if page[:page] < page[:last_page]
+      page = self.next_page
     else
-      data = self.get_page(self.last_page + 1)
+      page = nil
     end
   end
-  self.save
 end
 
 end

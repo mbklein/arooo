@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100507225437) do
+ActiveRecord::Schema.define(:version => 20100510062905) do
 
   create_table "day_threads", :force => true do |t|
     t.integer "day_id"
@@ -53,6 +53,10 @@ ActiveRecord::Schema.define(:version => 20100507225437) do
     t.string "base_url"
     t.string "username"
     t.string "password"
+    t.string "xpath_to_vote"
+    t.string "xpath_vote_to_user"
+    t.string "xpath_vote_to_post_id"
+    t.text   "cookies"
   end
 
   create_table "votes", :force => true do |t|

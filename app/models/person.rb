@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
   has_many :moderated_games, :class_name => 'Game', :foreign_key => 'moderator_id'
   has_many :games, :through => :players
 
-  def self.identify(str)
+  def self.identify(str, match = :fuzzy)
     ci_str = str.upcase
     
     # First look for an exact match
@@ -18,14 +18,18 @@ class Person < ActiveRecord::Base
       return found_nick.person
     end
     
-    # Then return an array of partials
-    result = self.find(:all, :conditions => ["UPPER(name) LIKE ?", "#{ci_str}%"])
-    if result
+    if match == :fuzzy
+      # Then return an array of partials
+      result = self.find(:all, :conditions => ["UPPER(name) LIKE ?", "#{ci_str}%"])
+      if result
+        return result
+      end
+    
+      result = self.find(:all, :conditions => ["UPPER(nickname) LIKE ?", "#{ci_str}%"]).collect { |found_nick| found_nick.person }
       return result
     end
     
-    result = self.find(:all, :conditions => ["UPPER(nickname) LIKE ?", "#{ci_str}%"]).collect { |found_nick| found_nick.person }
-    return result
+    return nil
   end
   
   def valid_names
