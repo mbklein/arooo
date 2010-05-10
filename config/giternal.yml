@@ -1,0 +1,3 @@
+identity-map:
+    repo: git://github.com/pjdavis/identity-map.git
+    path: vendor/plugins
