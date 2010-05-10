@@ -1,6 +1,5 @@
 class Day < ActiveRecord::Base
   belongs_to :game
-  has_one :thread, :class_name => 'DayThread', :dependent => :destroy
   has_many :deaths, :class_name => 'Player', :foreign_key => 'death_day_id', :dependent => :nullify
   has_many :votes, :order => 'seq', :dependent => :destroy
 
@@ -60,12 +59,12 @@ class Day < ActiveRecord::Base
   
   def reset!
     self.votes.each { |vote| vote.destroy }
-    self.thread.update_attributes :last_post => nil, :last_page => nil
+    self.update_attributes :last_post => nil, :last_page => nil
   end
 
   def update!
     votes = []
-    thread.each_unread_page { |page|
+    self.each_unread_page { |page|
       page_votes = page[:doc].search(self.game.server.xpath_to_vote).select { |b| b.text =~ /^(unvote|vote\s+(.+))/mi }.collect { |vote|
         voter = vote.search(self.game.server.xpath_vote_to_user).text
         voting_player = game.find_player(voter)
@@ -85,6 +84,31 @@ class Day < ActiveRecord::Base
         }
       }
     }
+  end
+
+  def get_page(page = nil)
+    if page.nil?
+      page = self.last_page || 1
+    end
+    result = self.game.server.get_thread(self.topic_id, page)
+    self.update_attribute(:last_page,page)
+    return result
+  end
+
+  def next_page
+    self.get_page(self.last_page.to_i + 1)
+  end
+
+  def each_unread_page
+    page = self.get_page
+    until page.nil? do
+      yield(page)
+      if page[:page] < page[:last_page]
+        page = self.next_page
+      else
+        page = nil
+      end
+    end
   end
 
 end

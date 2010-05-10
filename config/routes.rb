@@ -1,7 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :days
-
-  map.resources :games
+  map.resources :games do |games|
+    games.resources :players
+    games.resources :days
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
 

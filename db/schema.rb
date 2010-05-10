@@ -9,20 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100510162014) do
-
-  create_table "day_threads", :force => true do |t|
-    t.integer "day_id"
-    t.integer "topic_id"
-    t.integer "last_page"
-    t.integer "last_post"
-  end
+ActiveRecord::Schema.define(:version => 20100510220502) do
 
   create_table "days", :force => true do |t|
     t.integer  "game_id"
     t.integer  "seq"
     t.datetime "started"
     t.datetime "ended"
+    t.integer  "topic_id"
+    t.integer  "last_page"
+    t.integer  "last_post"
   end
 
   create_table "games", :force => true do |t|
