@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :games, :collection => { :days => :get } do |games|
-    games.resources :players
-    games.resources :days
-  end
+  map.resources :games, :collection => { :days => :get }
+  map.resources :days, :collection => { :votes => :get }, :member => { :tally => :get }
 
   # The priority is based upon order of creation: first created -> highest priority.
 

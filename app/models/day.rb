@@ -107,19 +107,21 @@ class Day < ActiveRecord::Base
         voter = vote.search(self.game.server.xpath_vote_to_user).text
         voting_player = game.find_player(voter)
         post_id = vote.search(self.game.server.xpath_vote_to_post_id).text.sub(/^post/,'').to_i
-        post_votes = vote.text.scan(/^(unvote|vote\s+(.+))/mi)
-        post_votes.each { |vote|
-          target = vote.last
-          target_player = target.nil? ? nil : game.find_player(target)
-          vote = Vote.create(
-            :seq => self.votes.length,
-            :voter => voting_player,
-            :target => target_player,
-            :target_name => target,
-            :source_post => post_id
-          )
-          self.votes << vote
-        }
+        unless self.votes.find_by_source_post(post_id)
+          post_votes = vote.text.scan(/^(unvote|vote\s+(.+))/mi)
+          post_votes.each { |vote|
+            target = vote.last
+            target_player = target.nil? ? nil : game.find_player(target.strip)
+            vote = Vote.create(
+              :seq => self.votes.length,
+              :voter => voting_player,
+              :target => target_player,
+              :target_name => target,
+              :source_post => post_id
+            )
+            self.votes << vote
+          }
+        end
       }
     }
   end

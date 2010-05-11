@@ -2,7 +2,7 @@ class DaysController < ApplicationController
 
   def index
     @days = Game.find(params[:game_id]).days.find(:all) do
-      order_by "#{params[:sidx]} #{params[:sord]}"
+      order_by "seq ASC"
       paginate :page => params[:page], :per_page => params[:rows]
     end
 
@@ -11,6 +11,17 @@ class DaysController < ApplicationController
     end
   end
 
+  def votes
+    @votes = Day.find(params[:id]).votes.find(:all) do
+      order_by "seq ASC"
+      paginate :page => params[:page], :per_page => params[:rows]
+    end
+
+    respond_to do |format|
+      format.json { render :json => @votes.to_jqgrid_json([:seq, :'voter.name', :action, :'target.name', :target_name], params[:page], params[:rows], @votes.total_entries) }
+    end
+  end
+  
   def show
     @game = Game.find(params[:game_id])
     @day = @game.days.find_by_seq(params[:id])
@@ -25,13 +36,23 @@ class DaysController < ApplicationController
   end
   
   def tally
-    @game = Game.find(params[:game_id])
-    @day = @game.days.find_by_seq(params[:id])
+    if params[:game_id].present?
+      @game = Game.find(params[:game_id])
+      @day = @game.days.find_by_seq(params[:id])
+    else
+      @day = Day.find(params[:id])
+    end
     @tally = @day.tally
     @colorize = params[:colorize] ? true : false
     
     respond_to do |format|
-      format.html # tally.html.erb
+      format.html {
+        if request.xhr?
+          render :partial => 'tally'
+        else
+          render :html
+        end
+      }
       format.json   { render :json => @tally }
       format.xml    { render :xml => @tally  }
     end

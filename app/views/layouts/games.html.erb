@@ -5,9 +5,20 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>Games: <%= controller.action_name %></title>
-  <%= jqgrid_stylesheets %> 
-  <%= jqgrid_javascripts %>
+  <% locale = I18n.locale rescue :en %>
+  <%= stylesheet_link_tag('ui-lightness/jquery-ui-1.8.1.custom.css') %>
+  <%= stylesheet_link_tag('ui.jqgrid.css') %>
+  <%= javascript_include_tag('jquery-1.4.2.min.js') %>
+  <%= javascript_include_tag('jquery-ui-1.8.1.custom.min.js') %>
+  <%= javascript_include_tag('jquery.layout.js') %>
+  <%= javascript_include_tag("i18n/grid.locale-#{locale}.js") %>
+  <%= javascript_include_tag('jquery.jqGrid.min.js') %>
+  <%= javascript_include_tag('jquery.tablednd.js') %>
+  <%= javascript_include_tag('jquery.contextmenu.js') %>
   <%= stylesheet_link_tag 'scaffold' %>
+  <style type="text/css">
+  .game-grid { margin-bottom: 1em; }
+  </style>
 </head>
 <body>
 

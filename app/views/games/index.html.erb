@@ -1,26 +1,61 @@
-<%= jqgrid("Games", "games", "/games",
-	[
-		{ :field => "id", :label => "ID", :width => 35, :resizable => false },
-		{ :field => "title", :label => "Title", :sortable => false },
-		{ :field => "moderator", :label => "Moderator", :sortable => false },
-		{ :field => "players", :label => "Players", :sortable => false },
-		{ :field => "days", :label => "Days", :sortable => false }				
-	],
-	{ 
-	  :search => false,
-	  :autowidth => true,
-	  :height => 500,
-		:subgrid => { :url => "/games/days",
-  	        :search => false,
-		        :autowidth => true,
-					  :columns => [
-						{ :field => "seq", :label => "Day #", :width => 45, :resizable => false },
-						{ :field => "votes", :label => "Vote Count", :sortable => false },
-						{ :field => "unresolved_votes", :label => "Unresolved", :sortable => false },
-						{ :field => "players", :label => "Players", :sortable => false },
-						{ :field => "to_lynch", :label => "To Lynch", :sortable => false },
-						{ :field => "high_vote", :label => "High Vote", :sortable => false }
-					  ]
-					}
-	}
-) %>
+<script type="text/javascript">
+  $(document).ready(function(){
+		$("#accordion").accordion( { autoHeight: false });
+		$("#gview_games_details_details .ui-widget-header").hide()
+	});
+</script>
+
+<div id="grids" style="width: 66%">
+  <div class="game-grid">
+    <%= jqgrid("Games", "games", "/games",
+    	[
+    		{ :field => "id", :label => "ID", :width => 35, :resizable => false },
+    		{ :field => "title", :label => "Title", :sortable => false },
+    		{ :field => "moderator", :label => "Moderator", :sortable => false },
+    		{ :field => "players", :label => "Players", :sortable => false },
+    		{ :field => "days", :label => "Days", :sortable => false }				
+    	],
+      { :search => false, :autowidth => true, :master_details => true, :details_url => "/games/days", :details_caption => "Days" }
+    ) %>
+  </div>
+  <div class="game-grid">
+    <%= jqgrid("Days", "games_details", "/games/days",
+    	  [
+    		{ :field => "seq", :label => "Day #", :width => 45, :resizable => false },
+    		{ :field => "votes", :label => "Vote Count", :sortable => false },
+    		{ :field => "unresolved_votes", :label => "Unresolved", :sortable => false },
+    		{ :field => "players", :label => "Players", :sortable => false },
+    		{ :field => "to_lynch", :label => "To Lynch", :sortable => false },
+    		{ :field => "high_vote", :label => "High Vote", :sortable => false }
+    	  ],
+        { 
+          :search => false, :autowidth => true, 
+          :master_details => true, :details_url => "/days/votes", :details_caption => "Votes",
+          :on_select_row => %{
+          var id = $('#games_details').getGridParam('selrow');
+          $('#tally').load("/days/" + id.toString() + "/tally");
+          $('#accordion').resize();
+          }
+        }
+    ) %>
+  </div>
+  
+  <div id="accordion">
+      <h6><a href="#">Tally</a></h6>
+      <div id="tally"></div>
+      <h6><a href="#">Voting Detail</a></h6>
+      <div>
+        <%= jqgrid("Votes", "games_details_details", "/days/votes",
+        	  [
+        		{ :field => "seq", :label => "Vote #", :width => 45, :resizable => false },
+        		{ :field => "voter", :label => "Voter", :sortable => false },
+        		{ :field => "action", :label => "Action", :sortable => false },
+        		{ :field => "target", :label => "Target", :sortable => false },
+        		{ :field => "target_name", :label => "Target Name", :sortable => false },
+        	  ],
+        	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
+        ) %>
+      </div>
+  </div>
+</div>
+

@@ -5,3 +5,4 @@ tmp
 vendor/plugins/authlogic
 vendor/plugins/jqgrid
 vendor/plugins/squirrel
+.DS_Store

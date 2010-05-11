@@ -31,6 +31,10 @@ class Game < ActiveRecord::Base
       person = p
     else
       person = Person.identify(p)
+      if person.nil?
+        # strip trailing punctuation
+        person = Person.identify(p.gsub(/[^A-Za-z0-9_-]+$/,''))
+      end
     end
 
     return self.players.select { |player| player.person == person }.first
