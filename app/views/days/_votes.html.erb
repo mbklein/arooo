@@ -1,0 +1,9 @@
+<div id="<%= "day_#{@day.seq}_votes" %>">
+<ol>
+	<% @day.votes.each { |vote| %>
+		<li><%= colorize(vote.voter) %>: 
+			<b><%= link_to "#{vote.action} #{vote.target ? colorize(vote.target) : vote.target_name}", @game.server.uri.merge("showthread.php?p=#{vote.source_post}#post#{vote.source_post}").to_s %></b>
+		</li>
+	<% } %>
+</ol>
+</div>

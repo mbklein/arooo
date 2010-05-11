@@ -1,4 +1,4 @@
-<div id="tallydiv">
+<div id="<%= "day_#{@day.seq}_tally" %>">
   <p><b>Official Day <%= @tally[:seq] %> Vote Count</b><br></p>
   <p><%= @tally[:player_count] %> players / <%= @tally[:to_lynch] %> votes needed to lynch.<br></p>
   <% unless @tally[:record].empty? %>

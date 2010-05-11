@@ -1,13 +1,17 @@
-<p>
-  <b>Title:</b>
-  <%=h @game.title %>
-</p>
+<h1><%= @game.name %></h1>
 
 <p>
   <b>Moderator:</b>
-  <%=h @game.moderator_id %>
+  <%=h @game.moderator.name %>
 </p>
 
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<h3>Days</h3>
+<p>
+<ul>
+<% @game.days.each { |day| %>
+	<li><%= link_to "Day #{day.seq}", "/games/#{@game.id}/days/#{day.seq}" %> |
+		<%= link_to "Game thread", @game.server.uri.merge("showthread.php?t=#{day.topic_id}").to_s %>
+	</li>
+<% } %>
+</ul>
+</p>

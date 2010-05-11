@@ -2,3 +2,4 @@ vendor/plugins/identity-map
 *.sqlite3
 log
 tmp
+vendor/plugins/authlogic

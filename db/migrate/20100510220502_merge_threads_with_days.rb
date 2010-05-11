@@ -4,7 +4,8 @@ class MergeThreadsWithDays < ActiveRecord::Migration
     add_column :days, :last_page, :integer
     add_column :days, :last_post, :integer
     Day.find(:all).each { |day|
-      day.update_attributes :topic_id => day.thread.topic_id, :last_page => day.thread.last_page, :last_post => day.thread.last_post
+      details = ActiveRecord::Base.connection.execute("SELECT topic_id, last_page, last_post FROM day_threads WHERE day_id = #{day.id}").first
+      day.update_attributes :topic_id => details['topic_id'], :last_page => details['last_page'], :last_post => details['last_post']
     }
     drop_table :day_threads
   end

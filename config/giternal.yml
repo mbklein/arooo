@@ -1,3 +1,6 @@
+authlogic:
+    repo: git://github.com/binarylogic/authlogic.git
+    path: vendor/plugins
 identity-map:
     repo: git://github.com/pjdavis/identity-map.git
     path: vendor/plugins

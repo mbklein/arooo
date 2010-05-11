@@ -1,13 +1,15 @@
-<p>
-  <b>Game:</b>
-  <%=h @day.game_id %>
-</p>
+<h1><%= @game.title %></h1>
 
-<p>
-  <b>Thread:</b>
-  <%=h @day.thread_id %>
-</p>
+<h2>Day <%= @day.seq %></h2>
 
-
-<%= link_to 'Edit', edit_day_path(@day) %> |
-<%= link_to 'Back', days_path %>
+<div id="<%= "day_#{@day.seq}_content" %>">
+	<div style="float:right; width: 65%">
+	<%= render :partial => 'tally' %>
+	</div>
+	
+	<div>
+	<h3>Votes</h3>
+	<%= render :partial => 'votes' %>
+	</div>
+	
+</div>
