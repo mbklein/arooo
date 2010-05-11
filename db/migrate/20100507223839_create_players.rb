@@ -7,6 +7,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.string :role
       t.string :alignment
     end
+    add_index(:players, [:person_id, :game_id], :unique => true)
   end
 
   def self.down

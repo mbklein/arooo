@@ -3,6 +3,7 @@ class CreatePeople < ActiveRecord::Migration
     create_table :people do |t|
       t.string :name
     end
+    add_index(:people, :name, :unique => true)
   end
 
   def self.down

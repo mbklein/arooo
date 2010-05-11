@@ -5,11 +5,17 @@
 <div id="<%= "day_#{@day.seq}_content" %>">
 	<div style="float:right; width: 65%">
 	<%= render :partial => 'tally' %>
+
+	<div id="<%= "day_#{@day.seq}_deaths" %>">
+	<h3>Deaths</h3>
+	<ul>
+	<% @day.deaths.each { |player| %>
+		<li><%= "#{colorize(player)} (#{player.role}, #{player.fate})" %>
+	<% } %>
+	</ul>
 	</div>
+</div>
 	
-	<div>
 	<h3>Votes</h3>
 	<%= render :partial => 'votes' %>
-	</div>
-	
 </div>

@@ -4,6 +4,7 @@ class CreateNicknames < ActiveRecord::Migration
       t.integer :person_id
       t.string :nickname
     end
+    add_index(:nicknames, :nickname, :unique => true)
   end
 
   def self.down
