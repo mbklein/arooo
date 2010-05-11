@@ -2,6 +2,7 @@ class DaysController < ApplicationController
 
   def index
     @days = Game.find(params[:game_id]).days.find(:all) do
+      group_by "seq"
       order_by "seq ASC"
       paginate :page => params[:page], :per_page => params[:rows]
     end
@@ -13,6 +14,7 @@ class DaysController < ApplicationController
 
   def votes
     @votes = Day.find(params[:id]).votes.find(:all) do
+      group_by "seq"
       order_by "seq ASC"
       paginate :page => params[:page], :per_page => params[:rows]
     end
