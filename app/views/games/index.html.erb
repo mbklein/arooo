@@ -1,22 +1,26 @@
-<h1>Listing games</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Moderator</th>
-  </tr>
-
-<% @games.each do |game| %>
-  <tr>
-    <td><%=h game.title %></td>
-    <td><%=h game.moderator_id %></td>
-    <td><%= link_to 'Show', game %></td>
-    <td><%= link_to 'Edit', edit_game_path(game) %></td>
-    <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New game', new_game_path %>
+<%= jqgrid("Games", "games", "/games",
+	[
+		{ :field => "id", :label => "ID", :width => 35, :resizable => false },
+		{ :field => "title", :label => "Title", :sortable => false },
+		{ :field => "moderator", :label => "Moderator", :sortable => false },
+		{ :field => "players", :label => "Players", :sortable => false },
+		{ :field => "days", :label => "Days", :sortable => false }				
+	],
+	{ 
+	  :search => false,
+	  :autowidth => true,
+	  :height => 500,
+		:subgrid => { :url => "/games/days",
+  	        :search => false,
+		        :autowidth => true,
+					  :columns => [
+						{ :field => "seq", :label => "Day #", :width => 45, :resizable => false },
+						{ :field => "votes", :label => "Vote Count", :sortable => false },
+						{ :field => "unresolved_votes", :label => "Unresolved", :sortable => false },
+						{ :field => "players", :label => "Players", :sortable => false },
+						{ :field => "to_lynch", :label => "To Lynch", :sortable => false },
+						{ :field => "high_vote", :label => "High Vote", :sortable => false }
+					  ]
+					}
+	}
+) %>

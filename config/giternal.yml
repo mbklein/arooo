@@ -4,3 +4,9 @@ authlogic:
 identity-map:
     repo: git://github.com/pjdavis/identity-map.git
     path: vendor/plugins
+squirrel:
+    repo: git://github.com/thoughtbot/squirrel.git 
+    path: vendor/plugins
+jqgrid:
+    repo: git://github.com/ahe/2dc_jqgrid.git 
+    path: vendor/plugins

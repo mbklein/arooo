@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
   has_many :nicknames, :dependent => :destroy
   has_many :moderated_games, :class_name => 'Game', :foreign_key => 'moderator_id', :dependent => :destroy
+  has_many :players, :dependent => :destroy
   has_many :games, :through => :players
 
   def self.identify(str, match = :fuzzy)

@@ -16,37 +16,67 @@ class Day < ActiveRecord::Base
     (self.players.length / 2) + 1
   end
   
+  def high_vote
+    record = self.tally[:record]
+    if record.empty?
+      0
+    else
+      record.first[:voters].length
+    end
+  end
+  
   def kill(player, fate = nil)
     self.deaths << player
     player.update_attribute :fate, fate
   end
   
-  def tally
+  def tally(implied_unvotes = true)
     lynch = false
     players = self.players
     record = []
     unvoted = players.dup
-    self.votes.each { |v|
-      if v.action == 'vote'
-        target_line = record.find { |line| line[:target] == v.target }
-        if target_line.nil?
-          target_line = { :target => v.target, :voters => [] }
-          record << target_line
-        end
-        
-        target_line[:voters] << unvoted.delete(v.voter)
-        if target_line[:voters].length >= self.to_lynch
-          lynch = true
-          self.deaths << v.target
-          break
-        end
+    
+    process_unvote = lambda { |v|
+      target_line = record.find { |line| line[:voters].include?(v.voter) }
+      if target_line.nil?
+        $stderr.puts "Ignoring #{v.to_s} (post #{v.source_post}) because voter hasn't registered a vote"
       else
-        target_line = record.find { |line| line[:voters].include?(v.voter) }
         unvoted << target_line[:voters].delete(v.voter)
         target_line[:voters].compact!
         if target_line[:voters].empty?
           record.delete(target_line)
         end
+      end
+    }
+    
+    process_vote = lambda { |v|
+      if (implied_unvotes)
+        process_unvote.call(v) unless unvoted.include?(v.voter)
+      end
+      
+      if unvoted.include?(v.voter)
+        target_line = record.find { |line| line[:target] == v.target }
+        if target_line.nil?
+          target_line = { :target => v.target, :voters => [] }
+          record << target_line
+        end
+      
+        target_line[:voters] << unvoted.delete(v.voter)
+        if target_line[:voters].length >= self.to_lynch
+          lynch = true
+          self.kill v.target, "Lynched D#{self.seq}"
+          break
+        end
+      else
+        $stderr.puts "Ignoring #{v.to_s} (post #{v.source_post}) because voter is not in the unvoted list"
+      end
+    }
+    
+    self.votes.each { |v|
+      if v.action == 'vote'
+        process_vote.call(v)
+      else
+        process_unvote.call(v)
       end
     }
     
@@ -65,6 +95,7 @@ class Day < ActiveRecord::Base
   end
   
   def reset!
+    self.deaths.clear
     self.votes.each { |vote| vote.destroy }
     self.update_attributes :last_post => nil, :last_page => nil
   end

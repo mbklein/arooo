@@ -7,4 +7,10 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  
+  
+  def jqgrid?
+    params[:page].present? and params[:rows].present?
+  end
+
 end

@@ -22,16 +22,4 @@ class Player < ActiveRecord::Base
   def inspect
     %{\#<#{self.class.name} "#{self.to_s}">}
   end
-
-  def to_hash
-    { :name => self.name, :role => self.role, :alignment => self.alignment, :fate => self.fate }
-  end
-  
-  def to_xml(options = {})
-    self.to_hash.to_xml(options)
-  end
-  
-  def to_json(options = {})
-    self.to_hash.to_json(options)
-  end
 end

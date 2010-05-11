@@ -3,3 +3,5 @@ vendor/plugins/identity-map
 log
 tmp
 vendor/plugins/authlogic
+vendor/plugins/jqgrid
+vendor/plugins/squirrel
