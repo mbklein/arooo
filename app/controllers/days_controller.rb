@@ -2,11 +2,12 @@ class DaysController < ApplicationController
 
   def index
     @days = Game.find(params[:game_id]).days.find(:all) do
-      group_by "seq"
-      order_by "seq ASC"
+#      order_by "#{params[:sidx]} #{params[:sord]}"
       paginate :page => params[:page], :per_page => params[:rows]
     end
 
+    @days.sort! { |a,b| a.seq <=> b.seq }
+    
     respond_to do |format|
       format.json { render :json => @days.to_jqgrid_json([:seq, :'votes.length', :'unresolved_votes.length', :'players.length', :to_lynch, :high_vote], params[:page], params[:rows], @days.total_entries) }
     end
@@ -14,10 +15,11 @@ class DaysController < ApplicationController
 
   def votes
     @votes = Day.find(params[:id]).votes.find(:all) do
-      group_by "seq"
-      order_by "seq ASC"
+#      order_by "#{params[:sidx]} #{params[:sord]}"
       paginate :page => params[:page], :per_page => params[:rows]
     end
+
+    @votes.sort! { |a,b| a.seq <=> b.seq }
 
     respond_to do |format|
       format.json { render :json => @votes.to_jqgrid_json([:seq, :'voter.name', :action, :'target.name', :target_name], params[:page], params[:rows], @votes.total_entries) }

@@ -3,8 +3,7 @@ class GamesController < ApplicationController
   # GET /games.xml
   def index
     @games = Game.find(:all) do
-      group_by "#{params[:sidx]}"
-      order_by "#{params[:sidx]} #{params[:sord]}"
+#      order_by "#{params[:sidx]} #{params[:sord]}"
       paginate :page => params[:page], :per_page => params[:rows]
     end
 
