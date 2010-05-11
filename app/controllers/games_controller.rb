@@ -31,6 +31,19 @@ class GamesController < ApplicationController
     end
   end
   
+  def players
+    @players = Game.find(params[:id]).players.find(:all) do
+#      order_by "#{params[:sidx]} #{params[:sord]}"
+      paginate :page => params[:page], :per_page => params[:rows]
+    end
+
+    @players.sort! { |a,b| a.seq <=> b.seq }
+
+    respond_to do |format|
+      format.json { render :json => @players.to_jqgrid_json([:seq, :name, :role, :alignment, :fate], params[:page], params[:rows], @players.total_entries) }
+    end
+  end
+  
   # GET /games/1
   # GET /games/1.xml
   def show
