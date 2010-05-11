@@ -73,10 +73,12 @@ class Day < ActiveRecord::Base
     }
     
     self.votes.each { |v|
-      if v.action == 'vote'
-        process_vote.call(v)
-      else
-        process_unvote.call(v)
+      unless v.ignore
+        if v.action == 'vote'
+          process_vote.call(v)
+        else
+          process_unvote.call(v)
+        end
       end
     }
     

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100510220502) do
+ActiveRecord::Schema.define(:version => 20100511212244) do
 
   create_table "days", :force => true do |t|
     t.integer  "game_id"
@@ -32,9 +32,13 @@ ActiveRecord::Schema.define(:version => 20100510220502) do
     t.string  "nickname"
   end
 
+  add_index "nicknames", ["nickname"], :name => "index_nicknames_on_nickname", :unique => true
+
   create_table "people", :force => true do |t|
     t.string "name"
   end
+
+  add_index "people", ["name"], :name => "index_people_on_name", :unique => true
 
   create_table "players", :force => true do |t|
     t.integer "person_id"
@@ -45,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20100510220502) do
     t.string  "fate"
     t.integer "death_day_id"
   end
+
+  add_index "players", ["person_id", "game_id"], :name => "index_players_on_person_id_and_game_id", :unique => true
 
   create_table "servers", :force => true do |t|
     t.string "name"
@@ -65,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20100510220502) do
     t.string   "target_name"
     t.datetime "cast"
     t.string   "source_post"
+    t.boolean  "ignore",      :default => false
   end
 
 end
