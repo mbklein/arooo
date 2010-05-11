@@ -107,7 +107,7 @@ class Day < ActiveRecord::Base
         voter = vote.search(self.game.server.xpath_vote_to_user).text
         voting_player = game.find_player(voter)
         post_id = vote.search(self.game.server.xpath_vote_to_post_id).text.sub(/^post/,'').to_i
-        unless self.votes.find_by_source_post(post_id)
+        unless self.votes.find_by_source_post(post_id.to_s)
           post_votes = vote.text.scan(/^(unvote|vote\s+(.+))/mi)
           post_votes.each { |vote|
             target = vote.last
