@@ -54,7 +54,7 @@ class DaysController < ApplicationController
         if request.xhr?
           render :partial => 'tally'
         else
-          render :html
+          render :html => 'tally'
         end
       }
       format.json   { render :json => @tally }
