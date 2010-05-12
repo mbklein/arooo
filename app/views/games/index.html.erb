@@ -1,27 +1,77 @@
 <script type="text/javascript">
-  $(document).ready(function(){
-		$("#accordion").accordion( { autoHeight: false });
-		$("#gview_games_details_details .ui-widget-header").hide()
-	});
+  function showTally() {
+    var id = $('#game_days').getGridParam('selrow');
+    if (id != null) {
+      var params = $('#tally_options').serialize();
+      $('#tally').load("/days/" + id.toString() + "/tally?" + params);
+    }
+  }
 </script>
 
-<div id="grids" style="width: 66%">
+<div style="width: 65%; float: right">
+	  <div class="game-grid">
+      <%= jqgrid("Players", "game_players", "/games/players",
+      	  [
+      		{ :field => "seq", :label => "#", :width => 45, :resizable => false },
+      		{ :field => "name", :label => "Name", :sortable => false },
+      		{ :field => "role", :label => "Role", :sortable => false },
+      		{ :field => "alignment", :label => "Alignment", :sortable => false },
+      		{ :field => "fate", :label => "Fate", :sortable => false },
+      	  ],
+      	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
+      ) %>
+	  </div>
+    <div class="game-grid">
+      <%= jqgrid("Votes", "day_votes", "/days/votes",
+      	  [
+      		{ :field => "seq", :label => "#", :width => 45, :resizable => false },
+      		{ :field => "voter", :label => "Voter", :sortable => false },
+      		{ :field => "action", :label => "Action", :sortable => false },
+      		{ :field => "target", :label => "Target", :sortable => false },
+      		{ :field => "target_name", :label => "Target Name", :sortable => false },
+      	  ],
+      	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
+      ) %>
+    </div>
+    <div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all">
+      <div class="ui-jqgrid-titlebar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
+        <span class="ui-jqgrid-title">Tally</span>
+      </div>
+      <div class="ui-jqgrid-bdiv" id="tally" style="margin: 3px"></div>
+      <div class="scroll ui-state-default ui-jqgrid-pager corner-bottom">
+        <form id="tally_options" action="#" method="GET">
+          <input type="checkbox" name="colorize" value="true" id="tally_colorize" onchange="showTally();"/> Colorize
+          <input type="checkbox" name="bbcode" value="true" id="tally_bbcode" onchange="showTally();"/> BBcode
+        </form>
+      </div>
+    </div>
+</div>
+
+<div id="grids" style="width: 33%; float: left">
   <div class="game-grid">
     <%= jqgrid("Games", "games", "/games",
     	[
-    		{ :field => "id", :label => "ID", :width => 35, :resizable => false },
+    		{ :field => "id", :label => "#", :width => 35, :resizable => false, :sortable => false },
     		{ :field => "title", :label => "Title", :sortable => false },
     		{ :field => "moderator", :label => "Moderator", :sortable => false },
     		{ :field => "players", :label => "Players", :sortable => false },
     		{ :field => "days", :label => "Days", :sortable => false }				
     	],
-      { :search => false, :autowidth => true, :master_details => true, :details_url => "/games/days", :details_caption => "Days" }
+      { :search => false, :autowidth => true, :master_details => [
+					{ :details_url => "/games/days", :details_grid => 'game_days', :details_caption => "Days" },
+					{ :details_url => "/games/players", :details_grid => 'game_players', :details_caption => "Players" }
+				],
+        :on_select_row => %{
+          $('#tally').html('');
+          $('#day_votes').clearGridData();
+        }
+			}
     ) %>
   </div>
   <div class="game-grid">
-    <%= jqgrid("Days", "games_details", "/games/days",
+    <%= jqgrid("Days", "game_days", "/games/days",
     	  [
-    		{ :field => "seq", :label => "Day #", :width => 45, :resizable => false },
+    		{ :field => "seq", :label => "#", :width => 45, :resizable => false, :sortable => false },
     		{ :field => "votes", :label => "Vote Count", :sortable => false },
     		{ :field => "unresolved_votes", :label => "Unresolved", :sortable => false },
     		{ :field => "players", :label => "Players", :sortable => false },
@@ -30,32 +80,12 @@
     	  ],
         { 
           :search => false, :autowidth => true, 
-          :master_details => true, :details_url => "/days/votes", :details_caption => "Votes",
-          :on_select_row => %{
-          var id = $('#games_details').getGridParam('selrow');
-          $('#tally').load("/days/" + id.toString() + "/tally");
-          $('#accordion').resize();
-          }
+          :master_details => [
+							{ :details_url => "/days/votes", :details_grid => 'day_votes', :details_caption => "Votes" }
+					],
+          :on_select_row => "showTally();"
         }
     ) %>
   </div>
-  
-  <div id="accordion">
-      <h6><a href="#">Tally</a></h6>
-      <div id="tally"></div>
-      <h6><a href="#">Voting Detail</a></h6>
-      <div>
-        <%= jqgrid("Votes", "games_details_details", "/days/votes",
-        	  [
-        		{ :field => "seq", :label => "Vote #", :width => 45, :resizable => false },
-        		{ :field => "voter", :label => "Voter", :sortable => false },
-        		{ :field => "action", :label => "Action", :sortable => false },
-        		{ :field => "target", :label => "Target", :sortable => false },
-        		{ :field => "target_name", :label => "Target Name", :sortable => false },
-        	  ],
-        	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
-        ) %>
-      </div>
-  </div>
-</div>
+ </div>
 

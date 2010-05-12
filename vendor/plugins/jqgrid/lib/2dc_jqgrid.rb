@@ -44,7 +44,7 @@ module Jqgrid
       
       # Stringify options values
       options.inject({}) do |options, (key, value)|
-        options[key] = (key != :subgrid) ? value.to_s : value
+        options[key] = (not [:subgrid, :master_details].include?(key)) ? value.to_s : value
         options
       end
       
@@ -80,23 +80,17 @@ module Jqgrid
       if options[:master_details]
         masterdetails = %Q/
           onSelectRow: function(ids) { 
-            if(ids == null) { 
-              ids=0; 
-              if(jQuery("##{id}_details").getGridParam('records') >0 ) 
-              { 
-                jQuery("##{id}_details").setGridParam({url:"#{options[:details_url]}?q=1&id="+ids,page:1})
-                .setCaption("#{options[:details_caption]}: "+ids)
-                .trigger('reloadGrid'); 
-              } 
-            } 
-            else 
-            { 
-              jQuery("##{id}_details").setGridParam({url:"#{options[:details_url]}?q=1&id="+ids,page:1})
-              .setCaption("#{options[:details_caption]} : "+ids)
-              .trigger('reloadGrid'); 
-            } 
-            #{options[:on_select_row]}
-          },/
+        /
+        options[:master_details].each { |detail|
+          $stderr.puts detail.inspect
+          detail_grid_name = detail[:details_grid] || "#{id}_details"
+          masterdetails +=%Q/
+            $.updateDetailGrid(ids,"#{detail_grid_name}","#{detail[:details_url]}","#{detail[:details_caption]}");
+          / 
+        }
+          masterdetails += %Q/
+              #{options[:on_select_row]}
+            },/
       end
 
       # Enable selection link, button

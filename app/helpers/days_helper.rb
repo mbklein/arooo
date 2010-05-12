@@ -4,11 +4,22 @@ module DaysHelper
     if person.nil?
       ''
     else
+      color = nil;
       if @colorize
-        color = person.alignment =~ /^G/ ? 'green' : 'red'
-        %{<span style="color: #{color}">#{person.name}</span>}
-      else
+        if person.alignment =~ /^G/ 
+          color = 'green'
+        elsif person.alignment =~ /^B/
+          color = 'red'
+        end
+      end
+      if color.nil?
         person.name
+      else 
+        if @bbcode
+          %{<span style="color: #{color}">[color="#{color}"]#{person.name}[/color]</span>}
+        else
+          %{<span style="color: #{color}">#{person.name}</span>}
+        end
       end
     end
   end

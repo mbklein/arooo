@@ -30,7 +30,8 @@ class DaysController < ApplicationController
     @game = Game.find(params[:game_id])
     @day = @game.days.find_by_seq(params[:id])
     @tally = @day.tally
-    @colorize = params[:colorize] ? true : false
+    @colorize = params[:colorize] == 'true'
+    @bbcode   = params[:bbcode]   == 'true'
     
     respond_to do |format|
       format.html # show.html.erb
@@ -47,7 +48,8 @@ class DaysController < ApplicationController
       @day = Day.find(params[:id])
     end
     @tally = @day.tally
-    @colorize = params[:colorize] ? true : false
+    @colorize = params[:colorize] == 'true'
+    @bbcode   = params[:bbcode]   == 'true'
     
     respond_to do |format|
       format.html {

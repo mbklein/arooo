@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
           person = Person.create(:name => name)
         end
       end
-      player = Player.create(:game => self, :person => person, :seq => self.players.length)
+      player = Player.create(:game => self, :person => person, :seq => self.players.length+1)
       self.players << player
       player
     }
