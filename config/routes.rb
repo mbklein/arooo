@@ -2,6 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :games, :collection => { :days => :get, :players => :get }
   map.resources :days, :collection => { :votes => :get }, :member => { :tally => :get }
 
+  map.root :controller => "games"
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
