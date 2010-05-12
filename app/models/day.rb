@@ -9,7 +9,7 @@ class Day < ActiveRecord::Base
   end
   
   def unresolved_votes
-    self.votes.select { |v| v.ignore or (not v.identified) }
+    self.votes.select { |v| (not v.ignore or v.identified) }
   end
   
   def to_lynch
