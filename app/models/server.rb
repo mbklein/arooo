@@ -4,13 +4,26 @@ require 'nokogiri'
 class Server < ActiveRecord::Base
 
 has_many :games, :dependent => :destroy
-serialize :cookies
+#serialize :cookies
 
 def agent
   unless @agent
     @agent = Mechanize.new
   end
   @agent
+end
+
+def load_cookies
+  StringIO.open(self.cookies.to_s) { |cookies|
+    self.agent.cookie_jar.load_cookiestxt(cookies)
+  }
+end
+
+def save_cookies
+  StringIO.open('','w') { |cookies|
+    self.agent.cookie_jar.dump_cookiestxt(cookies)
+    self.update_attribute :cookies, cookies.string
+  }
 end
 
 def uri
@@ -21,23 +34,24 @@ def uri
 end
 
 def get(path)
-  unless self.cookies.nil?
-    self.agent.cookie_jar = self.cookies
-  end
-  self.agent.get(self.uri.merge(path))
-  self.update_attribute :cookies, self.agent.cookie_jar
+  self.load_cookies
+  result = self.agent.get(self.uri.merge(path))
+  self.save_cookies
+  result
 end
 
 def login
   self.get('usercp.php')
-  form = self.agent.page.forms.find { |frm| frm.fields.find { |fld| fld.name == 'vb_login_username' } }
+  form = self.agent.page.form_with :action => /login.php/
   if form.nil?
     # No login form on User CP; already logged in!
     return true
   else
     form.vb_login_username = self.username
     form.vb_login_password = self.password
-    form.submit
+    form.checkbox_with(:name => 'cookieuser').check
+    form.submit(form.button_with(:value => 'Log in'))
+    self.save_cookies
     if self.agent.page.body =~ /redirect you/
       return true
     else
@@ -59,7 +73,7 @@ def get_thread(thread_id, page = 1)
   if this_page < page
     raise RangeError, "Page #{page} out of range 1-#{last_page}"
   end
-  return { :doc => Nokogiri(self.agent.page.body), :page => this_page, :last_page => last_page }
+  return { :doc => self.agent.page.parser, :page => this_page, :last_page => last_page }
 end
 
 end

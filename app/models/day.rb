@@ -1,7 +1,7 @@
 class Day < ActiveRecord::Base
   belongs_to :game
   has_many :deaths, :class_name => 'Player', :foreign_key => 'death_day_id', :dependent => :nullify
-  has_many :votes, :order => 'seq', :dependent => :destroy
+  has_many :votes, :order => 'seq', :dependent => :destroy, :conditions => ['ignore = ?', false]
 
   def players
     dead_players = self.game.days.collect { |day| day.seq < self.seq ? day.deaths : nil }.compact.flatten
@@ -105,10 +105,10 @@ class Day < ActiveRecord::Base
   def update!
     new_votes = []
     self.each_unread_page { |page|
-      page_votes = page[:doc].search(self.game.server.xpath_to_vote).select { |b| b.text =~ /^(unvote|vote\s+(.+))/mi }.collect { |vote|
-        voter = vote.search(self.game.server.xpath_vote_to_user).text
+      page_votes = page[:doc].xpath(self.game.server.xpath_to_vote).select { |b| b.text =~ /^(unvote|vote\s+(.+))/mi }.collect { |vote|
+        voter = vote.xpath(self.game.server.xpath_vote_to_user).text
         voting_player = game.find_player(voter)
-        post_id = vote.search(self.game.server.xpath_vote_to_post_id).text.sub(/^post/,'').to_i
+        post_id = vote.xpath(self.game.server.xpath_vote_to_post_id).text.sub(/^post/,'').to_i
         unless self.votes.find_by_source_post(post_id.to_s)
           post_votes = vote.text.scan(/^(unvote|vote\s+(.+))/mi)
           post_votes.each { |vote|

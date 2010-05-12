@@ -11,6 +11,10 @@ class Vote < ActiveRecord::Base
     identified = (action == 'unvote' || (self.target_name && self.target_id)) ? true : false
   end
   
+  def ignore!
+    self.update_attribute :ignore, true
+  end
+  
   def resolve(target, global = true)
     self.update_attribute :target, target
     if global

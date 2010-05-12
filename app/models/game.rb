@@ -3,6 +3,8 @@ class Game < ActiveRecord::Base
   has_many :days, :order => 'seq', :dependent => :destroy
   belongs_to :moderator, :class_name => 'Person'
   belongs_to :server
+
+  TRANSFORMATIONS = [/^(.+)$/,/^([A-Za-z0-9_-]+).*$/,/^(.+) harder.*$/,/^(\S+).*$/]
   
   def new_day(topic_id = nil)
     self.days << Day.create(:seq => self.days.length+1, :topic_id => topic_id)
@@ -30,11 +32,11 @@ class Game < ActiveRecord::Base
     elsif p.is_a?(Person)
       person = p
     else
-      person = Person.identify(p)
-      if person.nil?
-        # strip trailing punctuation
-        person = Person.identify(p.gsub(/[^A-Za-z0-9_-]+$/,''))
-      end
+      TRANSFORMATIONS.each { |re|
+        p_name = p.scan(re).flatten.first
+        person = Person.identify(p_name, :exact) unless p_name.nil?
+        break unless person.nil?
+      }
     end
 
     return self.players.select { |player| player.person == person }.first
