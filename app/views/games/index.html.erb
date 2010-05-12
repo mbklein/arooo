@@ -14,11 +14,12 @@
       	  [
       		{ :field => "seq", :label => "#", :width => 45, :resizable => false },
       		{ :field => "name", :label => "Name", :sortable => false },
-      		{ :field => "role", :label => "Role", :sortable => false },
-      		{ :field => "alignment", :label => "Alignment", :sortable => false },
-      		{ :field => "fate", :label => "Fate", :sortable => false },
+      		{ :field => "role", :label => "Role", :sortable => false, :editable => true },
+      		{ :field => "alignment", :label => "Alignment", :sortable => false, :editable => true },
+      		{ :field => "fate", :label => "Fate", :sortable => false, :editable => true },
       	  ],
-      	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
+      	  { :search => false, :autowidth => true, :rows_per_page => 1000,
+      	    :add => false, :edit => true, :inline_edit => true, :delete => false, :edit_url => "/players/update.json" }
       ) %>
 	  </div>
     <div class="game-grid">
@@ -33,11 +34,12 @@
       	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
       ) %>
     </div>
+    
     <div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all">
       <div class="ui-jqgrid-titlebar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
         <span class="ui-jqgrid-title">Tally</span>
       </div>
-      <div class="ui-jqgrid-bdiv" id="tally" style="margin: 3px"></div>
+      <div class="ui-jqgrid-bdiv"><div id="tally" style="margin: 3px"></div></div>
       <div class="scroll ui-state-default ui-jqgrid-pager corner-bottom">
         <form id="tally_options" action="#" method="GET">
           <input type="checkbox" name="colorize" value="true" id="tally_colorize" onchange="showTally();"/> Colorize

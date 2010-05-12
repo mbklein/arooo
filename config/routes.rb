@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :games, :collection => { :days => :get, :players => :get }
   map.resources :days, :collection => { :votes => :get }, :member => { :tally => :get }
-
+  
   map.root :controller => "games"
   
   # The priority is based upon order of creation: first created -> highest priority.
@@ -45,4 +45,6 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  map.connect ':controller/:action'
+  map.connect ':controller/:action.:format'
 end

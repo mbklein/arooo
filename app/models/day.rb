@@ -27,7 +27,9 @@ class Day < ActiveRecord::Base
   
   def kill(player, fate = nil)
     self.deaths << player
-    player.update_attribute :fate, fate
+    if player.fate.nil? and not fate.nil?
+      player.update_attribute :fate, fate
+    end
   end
   
   def tally(implied_unvotes = true)
