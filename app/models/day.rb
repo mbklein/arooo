@@ -103,7 +103,7 @@ class Day < ActiveRecord::Base
   end
 
   def update!
-    votes = []
+    new_votes = []
     self.each_unread_page { |page|
       page_votes = page[:doc].search(self.game.server.xpath_to_vote).select { |b| b.text =~ /^(unvote|vote\s+(.+))/mi }.collect { |vote|
         voter = vote.search(self.game.server.xpath_vote_to_user).text
@@ -114,17 +114,18 @@ class Day < ActiveRecord::Base
           post_votes.each { |vote|
             target = vote.last
             target_player = target.nil? ? nil : game.find_player(target.strip)
-            vote = Vote.create(
-              :seq => self.votes.length,
+            new_votes << {
               :voter => voting_player,
               :target => target_player,
               :target_name => target,
               :source_post => post_id
-            )
-            self.votes << vote
+            }
           }
         end
       }
+    }
+    new_votes.each { |v|
+      self.votes.create(v.merge({:seq => self.votes.length}))
     }
   end
 
