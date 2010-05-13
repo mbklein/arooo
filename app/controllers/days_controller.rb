@@ -50,6 +50,7 @@ class DaysController < ApplicationController
     @tally = @day.tally
     @colorize = params[:colorize] == 'true'
     @bbcode   = params[:bbcode]   == 'true'
+    @official = params[:official] == 'true'
     
     respond_to do |format|
       format.html {
