@@ -1,1 +1,2 @@
 mechanize --version 1.0.0
+authlogic --version >=2.0.0

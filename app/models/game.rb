@@ -3,6 +3,8 @@ class Game < ActiveRecord::Base
   has_many :days, :order => 'seq', :dependent => :destroy
   belongs_to :moderator, :class_name => 'Person'
   belongs_to :server
+  has_many :accesses, :dependent => :destroy
+  has_many :users, :through => :accesses
 
   TRANSFORMATIONS = [/^(.+)$/,/^([A-Za-z0-9_-]+).*$/,/^(.+) harder.*$/,/^(\S+).*$/]
   
@@ -41,5 +43,5 @@ class Game < ActiveRecord::Base
 
     return self.players.select { |player| player.person == person }.first
   end
-  
+
 end

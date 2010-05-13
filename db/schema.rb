@@ -9,16 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100511212244) do
+ActiveRecord::Schema.define(:version => 20100513053354) do
+
+  create_table "accesses", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "game_id",    :null => false
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "days", :force => true do |t|
-    t.integer  "game_id"
-    t.integer  "seq"
-    t.datetime "started"
-    t.datetime "ended"
-    t.integer  "topic_id"
-    t.integer  "last_page"
-    t.integer  "last_post"
+    t.integer   "game_id"
+    t.integer   "seq"
+    t.timestamp "started"
+    t.timestamp "ended"
+    t.integer   "topic_id"
+    t.integer   "last_page"
+    t.integer   "last_post"
   end
 
   create_table "games", :force => true do |t|
@@ -63,15 +71,29 @@ ActiveRecord::Schema.define(:version => 20100511212244) do
     t.text   "cookies"
   end
 
+  create_table "users", :force => true do |t|
+    t.string   "login",                             :null => false
+    t.string   "crypted_password",                  :null => false
+    t.string   "password_salt",                     :null => false
+    t.string   "persistence_token",                 :null => false
+    t.integer  "login_count",        :default => 0, :null => false
+    t.integer  "failed_login_count", :default => 0, :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+  end
+
   create_table "votes", :force => true do |t|
-    t.integer  "day_id"
-    t.integer  "seq"
-    t.integer  "voter_id"
-    t.integer  "target_id"
-    t.string   "target_name"
-    t.datetime "cast"
-    t.string   "source_post"
-    t.boolean  "ignore",      :default => false
+    t.integer   "day_id"
+    t.integer   "seq"
+    t.integer   "voter_id"
+    t.integer   "target_id"
+    t.string    "target_name"
+    t.timestamp "cast"
+    t.string    "source_post"
+    t.boolean   "ignore",      :default => false
   end
 
 end
