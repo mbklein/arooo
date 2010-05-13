@@ -1,0 +1,13 @@
+<div style="float:right">
+  <form id="login_form" name="login_form" action="/user_session" method="post" onsubmit="ajaxForm(this, '#session_info'); return(false);">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+    <% if current_user.nil? %>
+    <label for="user_session_login">Login</label>: <input id="user_session_login" name="user_session[login]" size="30" type="text"> 
+    <label for="user_session_password">Password</label>: <input id="user_session_password" name="user_session[password]" size="30" type="password"> 
+    <input id="user_session_submit" name="submit" type="submit" value="Log In">
+    <% else %>
+    <input name="_method" type="hidden" value="delete">
+    <input id="user_session_submit" name="submit" type="submit" value="Log Out">
+    <% end %>
+  </form>
+</div><%= current_user.nil? ? "Anonymous" : current_user.login %>

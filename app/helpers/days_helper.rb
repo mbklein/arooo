@@ -1,24 +1,24 @@
 module DaysHelper
 
-  def colorize(person)
-    if person.nil?
+  def colorize(player)
+    if player.nil?
       ''
     else
       color = nil;
-      if @colorize
-        if person.alignment =~ /^G/ 
+      if @colorize && can_observe?(player.game)
+        if player.alignment =~ /^G/ 
           color = 'green'
-        elsif person.alignment =~ /^B/
+        elsif player.alignment =~ /^B/
           color = 'red'
         end
       end
       if color.nil?
-        person.name
+        player.name
       else 
         if @bbcode
-          %{<span style="color: #{color}">[color="#{color}"]#{person.name}[/color]</span>}
+          %{<span style="color: #{color}">[color="#{color}"]#{player.name}[/color]</span>}
         else
-          %{<span style="color: #{color}">#{person.name}</span>}
+          %{<span style="color: #{color}">#{player.name}</span>}
         end
       end
     end

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Games: <%= controller.action_name %></title>
+  <title>Games</title>
   <% locale = I18n.locale rescue :en %>
   <%= stylesheet_link_tag('ui-lightness/jquery-ui-1.8.1.custom.css') %>
   <%= stylesheet_link_tag('ui.jqgrid.css') %>
@@ -17,6 +17,18 @@
   <%= javascript_include_tag('jquery.contextmenu.js') %>
   <%= javascript_include_tag('jqGrid.update.detail.js') %>
   <%= stylesheet_link_tag 'scaffold' %>
+  <script type="text/javascript">
+    function ajaxForm(form, container) {
+      var url = $(form).attr('action');
+      var params = $(form).serialize();
+      var receiver = $(container);
+      $.post(url, params, function(data) { 
+        receiver.html(data);
+        return(false);
+      }, 'html');
+      return false; 
+    }
+  </script>
   <style type="text/css">
   .game-grid { margin-bottom: 1em; }
   </style>

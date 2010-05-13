@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :games, :collection => { :days => :get, :players => :get }
   map.resources :days, :collection => { :votes => :get }, :member => { :tally => :get }
+  map.resource :user_session
+  map.resources :users
   
   map.root :controller => "games"
   

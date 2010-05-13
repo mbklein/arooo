@@ -8,6 +8,12 @@
   }
 </script>
 
+<div class="ui-jqgrid-titlebar ui-widget-header ui-helper-clearfix ui-corner-all" style="margin-bottom: 5px; padding: 2px">
+  <div class="ui-jqgrid-title" id="session_info">
+    <%= render :partial => 'user_sessions/session' %>
+  </div>
+</div>
+
 <div style="width: 65%; float: right">
 	  <div class="game-grid">
       <%= jqgrid("Players", "game_players", "/games/players",

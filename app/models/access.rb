@@ -11,7 +11,7 @@ class Access < ActiveRecord::Base
 
   def method_missing(sym, *args)
     if /^can_(.+)\?$/ === sym.to_s
-      permissions(self.role).include?($1)
+      permissions(self.role).include?($1.to_sym)
     else
       super sym, *args
     end
