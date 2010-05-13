@@ -1,6 +1,3 @@
-identity-map:
-    repo: git://github.com/pjdavis/identity-map.git
-    path: vendor/plugins
 squirrel:
     repo: git://github.com/thoughtbot/squirrel.git 
     path: vendor/plugins
