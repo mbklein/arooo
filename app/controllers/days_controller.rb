@@ -47,7 +47,7 @@ class DaysController < ApplicationController
     else
       @day = Day.find(params[:id])
     end
-    @tally = @day.tally
+    @tally = @day.tally(params[:through].to_i)
     @colorize = params[:colorize] == 'true'
     @bbcode   = params[:bbcode]   == 'true'
     @official = params[:official] == 'true'

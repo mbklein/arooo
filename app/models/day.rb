@@ -32,7 +32,7 @@ class Day < ActiveRecord::Base
     end
   end
   
-  def tally(implied_unvotes = true)
+  def tally(through = nil, implied_unvotes = true)
     lynch = false
     players = self.players
     record = []
@@ -82,6 +82,7 @@ class Day < ActiveRecord::Base
           process_unvote.call(v)
         end
       end
+      break if v.id == through
     }
     
     record = record.compact.sort { |a,b|

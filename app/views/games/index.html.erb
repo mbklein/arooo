@@ -37,7 +37,11 @@
       		{ :field => "target", :label => "Target", :sortable => false },
       		{ :field => "target_name", :label => "Target Name", :sortable => false },
       	  ],
-      	  { :search => false, :autowidth => true, :rows_per_page => 1000 }
+      	  { :search => false, :autowidth => true, :rows_per_page => 1000, 
+      	    :direct_selection => true, :selection_handler => %Q/
+            $('#tally_through').val(id);
+            showTally();
+      	  / }
       ) %>
     </div>
     
@@ -48,6 +52,7 @@
       <div class="ui-jqgrid-bdiv"><div id="tally" style="margin: 3px"></div></div>
       <div class="scroll ui-state-default ui-jqgrid-pager corner-bottom">
         <form id="tally_options" action="#" method="GET">
+          <input type="hidden" name="through" id="tally_through" value=""/>
           <input type="checkbox" name="official" value="true" id="tally_colorize" onchange="showTally();"/> Official
           <input type="checkbox" name="colorize" value="true" id="tally_colorize" onchange="showTally();"/> Colorize
           <input type="checkbox" name="bbcode" value="true" id="tally_bbcode" onchange="showTally();"/> BBcode
@@ -92,7 +97,10 @@
           :master_details => [
 							{ :details_url => "/days/votes", :details_grid => 'day_votes', :details_caption => "Votes" }
 					],
-          :on_select_row => "showTally();"
+          :on_select_row => %Q/
+            $('#tally_through').val('');
+            showTally();
+          /
         }
     ) %>
   </div>
