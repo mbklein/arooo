@@ -9,14 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100513053354) do
+ActiveRecord::Schema.define(:version => 20100517172407) do
 
   create_table "accesses", :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.integer  "game_id",    :null => false
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "user_id",    :null => false
+    t.integer   "game_id",    :null => false
+    t.string    "role"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "days", :force => true do |t|
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20100513053354) do
     t.string  "title"
     t.integer "moderator_id"
     t.integer "server_id"
+    t.boolean "allow_anonymous_view", :default => true
+    t.boolean "over",                 :default => false
   end
 
   create_table "nicknames", :force => true do |t|
@@ -72,17 +74,17 @@ ActiveRecord::Schema.define(:version => 20100513053354) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                             :null => false
-    t.string   "crypted_password",                  :null => false
-    t.string   "password_salt",                     :null => false
-    t.string   "persistence_token",                 :null => false
-    t.integer  "login_count",        :default => 0, :null => false
-    t.integer  "failed_login_count", :default => 0, :null => false
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
-    t.string   "current_login_ip"
-    t.string   "last_login_ip"
+    t.string    "login",                             :null => false
+    t.string    "crypted_password",                  :null => false
+    t.string    "password_salt",                     :null => false
+    t.string    "persistence_token",                 :null => false
+    t.integer   "login_count",        :default => 0, :null => false
+    t.integer   "failed_login_count", :default => 0, :null => false
+    t.timestamp "last_request_at"
+    t.timestamp "current_login_at"
+    t.timestamp "last_login_at"
+    t.string    "current_login_ip"
+    t.string    "last_login_ip"
   end
 
   create_table "votes", :force => true do |t|

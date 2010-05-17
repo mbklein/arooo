@@ -6,11 +6,11 @@ module ApplicationHelper
   end
   
   def can_observe?(game)
-    rights(game).can_observe?
+    game.over || rights(game).can_observe?
   end
   
   def can_view?(game)
-    rights(game).can_view?
+    game.over || (current_user_session.nil? && game.allow_anonymous_view) || rights(game).can_view?
   end
   
   def rights(game)
