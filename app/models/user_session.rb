@@ -1,11 +1,26 @@
 class UserSession < Authlogic::Session::Base
 
   class << self
+    def anonymous_session
+      if @anonymous_session.nil?
+        @anonymous_session = UserSession.new
+
+        class << @anonymous_session
+          def user ; nil  ; end
+          def save ; true ; end
+          def can_moderate?(game) ; false                                   ; end
+          def can_observe?(game)  ; game.over                               ; end
+          def can_view?(game)     ; game.over || game.allow_anonymous_view  ; end
+        end
+      end
+      @anonymous_session
+    end
+
     def find(*args)
       begin
-        super(*args) || ANONYMOUS_USER_SESSION
+        super(*args) || anonymous_session
       rescue
-        ANONYMOUS_USER_SESSION
+        anonymous_session
       end
     end
   end
@@ -42,30 +57,4 @@ class UserSession < Authlogic::Session::Base
     game.over || rights(game).can_view?
   end
 
-end
-
-ANONYMOUS_USER_SESSION = UserSession.new
-
-class << ANONYMOUS_USER_SESSION
-  
-  def user
-    nil
-  end
-  
-  def save
-    true
-  end
-  
-  def can_moderate?(game)
-    false
-  end
-
-  def can_observe?(game)
-    game.over
-  end
-
-  def can_view?(game)
-    game.over || game.allow_anonymous_view
-  end
-  
 end
