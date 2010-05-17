@@ -1,10 +1,18 @@
+class NoAccess
+  class << self
+    def method_missing(sym, *args)
+      return false
+    end
+  end
+end
+
 class Access < ActiveRecord::Base
 
   belongs_to :game
   belongs_to :user
   
   @@acl = {
-    'moderator' => [:edit,:observe,:view],
+    'moderator' => [:moderate,:observe,:view],
     'observer'  => [:observe,:view],
     'player'    => [:view]
   }

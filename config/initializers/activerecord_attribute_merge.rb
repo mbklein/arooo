@@ -4,7 +4,7 @@ class ActiveRecord::Base
     def match_attributes(params)
       result = {}
       params.each_pair { |k,v|
-        result[k] = v if self.column_names.include?(k.to_s)
+        result[k.to_sym] = v if (k.to_sym != :id) && self.column_names.include?(k.to_s)
       }
       return result
     end

@@ -2,19 +2,15 @@
 module ApplicationHelper
 
   def can_moderate?(game)
-    rights(game).can_moderate?
+    current_user_session.can_moderate?(game)
   end
-  
+
   def can_observe?(game)
-    game.over || rights(game).can_observe?
+    current_user_session.can_observe?(game)
   end
-  
+
   def can_view?(game)
-    game.over || (current_user_session.nil? && game.allow_anonymous_view) || rights(game).can_view?
+    current_user_session.can_view?(game)
   end
-  
-  def rights(game)
-    return current_user_session && current_user_session.rights(game)
-  end
-  
+
 end
